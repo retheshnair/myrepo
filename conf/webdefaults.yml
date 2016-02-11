@@ -1,0 +1,4 @@
+---
+contorl_server : acs
+web_root: /var/www/html
+pkg_lynx: lynx
