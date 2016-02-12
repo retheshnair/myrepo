@@ -1,0 +1,18 @@
+--- #PROMPT FOR USER PACKAGE
+- hosts: db
+  user: vagrant
+  sudo: yes
+  connection: ssh
+  gather_facts: no
+  vars:
+    playbook_version: 0.1b
+    author: Rethesh Nair
+  vars_prompt:
+    - name: pkgtoinstall
+      prompt: Install Which Package?
+      default: telnet
+      private: no
+  tasks:
+    - name: Install the indicated package
+      yum: pkg={{ pkgtoinstall }} state=latest
+        

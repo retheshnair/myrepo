@@ -1,0 +1,34 @@
+---
+# Upgrade VMs
+- hosts: vms
+  vars:
+   var_remote_user: vagrant
+   var_sudo: yes
+  remote_user: "{{ var_remote_user }}"
+  sudo: "{{ var_sudo }}"
+  gather_facts: yes
+  tasks:
+  - name: update selected packages on Redhat Based System
+    when: ansible_os_family == "RedHat" or ansible_distribution == 'CentOS'
+    yum: name={{ item }} state=latest
+    async: 0
+    poll: 0
+    with_items:
+    - zip
+    - unzip
+    - wget
+    - sysstat
+    - ntp
+    - telnet
+  - name: update select packages on Debian Based System
+    when: ansible_os_family == "Debian" or ansible_distribution == 'Ubuntu'   
+    apt:  name={{ item }} state=latest
+    async: 0
+    poll: 0
+    with_items:
+    - zip
+    - unzip
+    - wget
+    - sysstat
+    - ntp
+    - telnet

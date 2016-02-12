@@ -1,0 +1,18 @@
+--- #Conditionals
+- hosts: web
+  user: vagrant
+  sudo: yes
+  connection: ssh
+  gather_facts: yes
+  vars: 
+    playbook_type: conditionexample
+  vars_files:
+   - conf/copyright.yml
+   - conf/webdefaults.yml
+  tasks:
+   - name: Install Apache Appropriate to the Distribution Type (Redhat/Centos)
+     when: ansible_os_family == "RedHat"
+     command: yum -y install httpd
+   - name: Install Apache Appropriate to the Distribution Type (Debian/Ubuntu)
+     when: ansible_os_family == "Debian"
+     command: apt-get -y install apache2

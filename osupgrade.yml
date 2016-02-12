@@ -1,0 +1,20 @@
+---
+# Upgrade VMs
+- hosts: vms
+  vars:
+   var_remote_user: vagrant
+   var_sudo: yes
+  remote_user: "{{ var_remote_user }}"
+  sudo: "{{ var_sudo }}"
+  gather_facts: yes
+  tasks:
+  - name: Upgrade the RedHat OS
+    when: ansible_os_family == "RedHat"
+    yum: name=* state=latest
+    async: 0
+    poll: 0
+  - name: Upgrade the Debian OS
+    when: ansible_os_family == "Debian"    
+    apt:  upgrade=dist update_cache=yes
+    async: 0
+    poll: 0

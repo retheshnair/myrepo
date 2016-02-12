@@ -1,0 +1,13 @@
+--- #LOCAL ACTION
+- hosts: local
+  sudo: yes
+  connection: ssh
+  user: vagrant
+  gather_facts: no
+  vars:
+  vars_prompt:
+     prompt: Install Which Package?
+     name: pkg_name
+  tasks:
+  - name: Install the Telnet Client
+    apt: pkg={{ pkg_name }} state=latest
